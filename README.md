@@ -1,6 +1,6 @@
 # Run Latest Java Compiler on old JDKs!
 _nb-javac_ is a backport of OpenJDK "javac", i.e., the Java compiler. _nbjavac_
-takes sources from the latest JDK and backports them to run on JDK8+.
+takes sources from the latest JDK and backports them to run on JDK17+ (LTS - 1).
 It allows to run the latest OpenJDK compiler on older JDKs - as old
 as JDK8 while being 1:1 identical with the official `javac`.
 Use `nb-javac` to execute the latest Java language compiler on old
@@ -9,8 +9,8 @@ JDKs!
 ## Prerequisite
   - Git
   - Ant 1.9.9 or above
-  - JDK 17 to build
-  - JDK 8 to test
+  - JDK 25 to build
+  - JDK 17 to test
   - Apache Maven to publish to Maven central
 
 ## Building nb-javac jar files
@@ -34,20 +34,20 @@ $ git checkout <release_tag_name>
 ### Run the below command to build nb-javac.
 
 ```bash
-$ JAVA_HOME=/jdk-17/ ant -f ./make/langtools/netbeans/nb-javac clean jar
+$ JAVA_HOME=/jdk-25/ ant -f ./make/langtools/netbeans/nb-javac clean jar
 ```
 
 Two jars namely `nb-javac-*-api.jar` and `nb-javac-*-impl.jar` are going to appear
 at location `./make/langtools/netbeans/nb-javac/dist/`. It is also possible to
 sanity test the generated Javac on JDK8:
 ```bash
-$ JAVA_HOME=/jdk-8/ ant -f ./make/langtools/netbeans/nb-javac test
+$ JAVA_HOME=/jdk-17/ ant -f ./make/langtools/netbeans/nb-javac test
 ```
 
 ### Generate ZIP with the source code of nb-javac
 
 ```bash
-$ JAVA_HOME=/jdk-17/ ant -f ./make/langtools/netbeans/nb-javac zip-nb-javac-sources
+$ JAVA_HOME=/jdk-25/ ant -f ./make/langtools/netbeans/nb-javac zip-nb-javac-sources
 ```
 
 # Publishing to maven central / OSSRH

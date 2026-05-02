@@ -1,14 +1,14 @@
 # Hacking Guide for the automatically generated [nbjavac](README.md)
 
 The idea of the new build system is to take the JDK 16+ `javac` sources and
-automatically convert them to run on JDK 8+. As a result the sources come 
+automatically convert them to run on JDK 17+. As a result the sources come
 from real JDK repository. The `nbjavac` repository doesn't contain them. 
 This repository only contains the build scripts and
 description of [advanced refactorings](https://netbeans.apache.org/jackpot/HintsFileFormat.html).
 Use:
 
 ```bash
-$ JAVA_HOME=/jdk-17/ ant -f ./make/langtools/netbeans/nb-javac jar
+$ JAVA_HOME=/jdk-25/ ant -f ./make/langtools/netbeans/nb-javac jar
 ```
 
 to build everything at once. Read below to control individual steps of the build.
@@ -20,9 +20,9 @@ The build requires JDK repository in `jdk` subdirectory of the root of `nb-javac
 If such directory doesn't exist, the build checks out one:
 
 ```bash
-$ JAVA_HOME=/jdk-17/ ant -f ./make/langtools/netbeans/nb-javac init \
-    -Djdk.git.url=https://github.com/openjdk/jdk17 \
-    -Djdk.git.commit=jdk-17+35
+$ JAVA_HOME=/jdk-25/ ant -f ./make/langtools/netbeans/nb-javac init \
+    -Djdk.git.url=https://github.com/openjdk/jdk \
+    -Djdk.git.commit=jdk-26+27
 ```
 
 If the `jdk` directory is present the build leaves its content untouched. E.g.
@@ -46,13 +46,13 @@ to them. This is done by executing the [jackpot](https://netbeans.apache.org/jac
 target:
 
 ```bash
-$ JAVA_HOME=/jdk-17/ ant -f ./make/langtools/netbeans/nb-javac jackpot
+$ JAVA_HOME=/jdk-25/ ant -f ./make/langtools/netbeans/nb-javac jackpot
 ```
 
 This step copies the `javac` sources from the `jdk` subdirectory into a sibling
 `src` subdirectory and applies necessary transformations to them.
-The goal of such transformations is to eliminate usage of JDK9+ APIs
-and replace them with JDK8 only APIs.
+The goal of such transformations is to eliminate usage of JDK17+ APIs
+and replace them with JDK17 only APIs.
 
 The sources under the `src/java.compiler` and `src/jdk.compiler` shall not
 be edited manually. Rather than that edit the sources in the original
@@ -60,7 +60,7 @@ be edited manually. Rather than that edit the sources in the original
 the refactorings again execute:
 
 ```bash
-$ JAVA_HOME=/jdk-17/ ant -f ./make/langtools/netbeans/nb-javac clean jackpot
+$ JAVA_HOME=/jdk-25/ ant -f ./make/langtools/netbeans/nb-javac clean jackpot
 ```
 
 ### The build
@@ -69,7 +69,7 @@ As described in [general documentation](README.md) use the following command to
 generate the final JAR files:
 
 ```bash
-$ JAVA_HOME=/jdk-17/ ant -f ./make/langtools/netbeans/nb-javac clean jar
+$ JAVA_HOME=/jdk-25/ ant -f ./make/langtools/netbeans/nb-javac clean jar
 ```
 
 JARs `nb-javac-*-api.jar` and `nb-javac-*-impl.jar` are going to appear
@@ -86,7 +86,7 @@ $ netbeans --open make/langtools/netbeans/nb-javac/
 and you should be able to debug a test (for example `StringWrapperTest`) with following command line:
 
 ```bash
-$ JAVA_HOME=/jdk-8/ ant -f make/langtools/netbeans/nb-javac test \
+$ JAVA_HOME=/jdk-17/ ant -f make/langtools/netbeans/nb-javac test \
     -Dincludes=**/StringWrapperTest* \
     -Ddebug.jvmargs=-agentlib:jdwp=transport=dt_socket,server=y,address=5005,suspend=y
 ```
